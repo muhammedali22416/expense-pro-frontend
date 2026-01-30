@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, CalendarDays } from 'lucide-react';
 
 const QuickAddForm = ({ 
   formData, 
@@ -21,12 +21,31 @@ const QuickAddForm = ({
 
       <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Date */}
-        <input 
-          type="date" 
-          value={formData.date || ''} 
-          onChange={(e) => setFormData({...formData, date: e.target.value})} 
-          className="w-full p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl font-semibold text-slate-700 dark:text-white outline-none border-2 border-transparent focus:border-[#4f46e5] transition-all text-[14px] md:text-sm cursor-pointer appearance-none min-h-[50px]" 
-        />
+        <div className="relative w-full">
+  <input 
+    type="date" 
+    value={formData.date || ''} 
+    onChange={(e) => setFormData({...formData, date: e.target.value})} 
+    className="w-full p-3.5 pr-10 bg-slate-50 dark:bg-slate-800/50 rounded-xl font-semibold text-slate-700 dark:text-white outline-none border-2 border-transparent focus:border-[#4f46e5] transition-all text-[13px] md:text-sm cursor-pointer" 
+    style={{
+      WebkitAppearance: 'none',
+      display: 'block'
+    }}
+  />
+  {/* Sirf ye naya icon nazar aaye is liye humne purane ko hide karne ka tareeqa niche likha hai */}
+  <CalendarDays 
+    size={18} 
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" 
+  />
+
+  {/* Ye choti si line purane gande icon ko maar degi */}
+  <style>{`
+    input::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      cursor: pointer;
+    }
+  `}</style>
+</div>
         
         {/* Title (Dynamic: expense_title or income_title) */}
         <input 
