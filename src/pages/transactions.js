@@ -328,35 +328,43 @@ const Transactions = () => {
     </div>
 
     {/* Date Range Container */}
-    <div className="flex-[3] w-full flex flex-col sm:flex-row items-end gap-3">
-      <div className="w-full">
-        <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest ml-1 mb-2 block">From</label>
-        <div className="relative">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-          <input 
-            type="date" 
-            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 rounded-2xl outline-none dark:text-slate-100 text-sm transition-all [color-scheme:light] dark:[color-scheme:dark]"
-            value={startDate} 
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <span className="hidden sm:block mb-4 text-slate-300 dark:text-slate-600">—</span>
-
-      <div className="w-full">
-        <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest ml-1 mb-2 block">To</label>
-        <div className="relative">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-          <input 
-            type="date" 
-            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 rounded-2xl outline-none dark:text-slate-100 text-sm transition-all [color-scheme:light] dark:[color-scheme:dark]"
-            value={endDate} 
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
-      </div>
+<div className="flex-[3] w-full flex flex-col sm:flex-row items-end gap-3">
+  {/* From Date */}
+  <div className="w-full">
+    <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest ml-1 mb-2 block">From</label>
+    <div className="relative">
+      <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+      <input 
+        type={startDate ? "date" : "text"} 
+        onFocus={(e) => (e.target.type = "date")}
+        onBlur={(e) => !startDate && (e.target.type = "text")}
+        placeholder="Start Date"
+        className="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 rounded-2xl outline-none dark:text-slate-100 text-sm transition-all [color-scheme:light] dark:[color-scheme:dark]"
+        value={startDate} 
+        onChange={(e) => setStartDate(e.target.value)}
+      />
     </div>
+  </div>
+
+  <span className="hidden sm:block mb-4 text-slate-300 dark:text-slate-600">—</span>
+
+  {/* To Date */}
+  <div className="w-full">
+    <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest ml-1 mb-2 block">To</label>
+    <div className="relative">
+      <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+      <input 
+        type={endDate ? "date" : "text"} 
+        onFocus={(e) => (e.target.type = "date")}
+        onBlur={(e) => !endDate && (e.target.type = "text")}
+        placeholder="End Date"
+        className="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 rounded-2xl outline-none dark:text-slate-100 text-sm transition-all [color-scheme:light] dark:[color-scheme:dark]"
+        value={endDate} 
+        onChange={(e) => setEndDate(e.target.value)}
+      />
+    </div>
+  </div>
+</div>
 
     {/* GLOBAL CLEAR BUTTON */}
     {(searchTerm || startDate || endDate) && (
@@ -376,10 +384,12 @@ const Transactions = () => {
 </div>
        {/* LIST SECTION */}
 <div className="bg-white dark:bg-[#0f172a] rounded-[2rem] border border-slate-200 dark:border-slate-800/60 shadow-sm overflow-hidden mb-8 transition-colors">
-  <div className="flex flex-col min-h-[300px]">
+  {/* Yahan se min-h-[300px] hata kar h-auto kar diya */}
+  <div className="flex flex-col h-auto"> 
     <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
       {loading ? (
-        <div className="py-24 flex flex-col items-center justify-center gap-4">
+        /* Loading state mein height honi chahiye taake jump na kare */
+        <div className="py-24 flex flex-col items-center justify-center gap-4 min-h-[300px]">
           <Loader2 className="animate-spin text-indigo-600" size={32} />
           <p className="text-xs font-medium text-slate-400 animate-pulse">Fetching records...</p>
         </div>
@@ -390,7 +400,6 @@ const Transactions = () => {
             exp={item} 
             isFirst={idx === 0} 
             onEdit={() => handleEditClick(item)} 
-            // Check karein ke aapka state 'selectedItem' hi hai ya 'selectedIncome'
             onDelete={() => { 
               setSelectedItem(item); 
               setIsDeleteModalOpen(true); 
@@ -398,7 +407,8 @@ const Transactions = () => {
           />
         ))
       ) : (
-        <div className="py-24 text-center">
+        /* No records state mein height */
+        <div className="py-24 text-center min-h-[200px] flex flex-col items-center justify-center">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800/50 text-slate-400 mb-4">
             <ReceiptText size={24} strokeWidth={1.5} />
           </div>
