@@ -25,7 +25,7 @@ const QuickAddForm = ({
           type="date" 
           value={formData.date || ''} 
           onChange={(e) => setFormData({...formData, date: e.target.value})} 
-          className="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl font-semibold text-slate-700 dark:text-white outline-none border-2 border-transparent focus:border-[#4f46e5] transition-all text-[13px] md:text-sm cursor-pointer" 
+          className="w-full p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl font-semibold text-slate-700 dark:text-white outline-none border-2 border-transparent focus:border-[#4f46e5] transition-all text-[14px] md:text-sm cursor-pointer appearance-none min-h-[50px]" 
         />
         
         {/* Title (Dynamic: expense_title or income_title) */}
